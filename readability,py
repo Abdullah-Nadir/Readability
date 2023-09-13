@@ -1,0 +1,46 @@
+from cs50 import get_string
+
+
+def main():
+    # Taking input from the user
+    text = get_string("Text: ")
+
+    # Counting number of letters, numbers, and sentences in the text
+    letters, words, sentences = counter(text)
+
+    # Coleman-Liau index Terms
+    L = (letters / words) * 100
+    S = (sentences / words) * 100
+
+    # Calculating Results
+    result = round(0.0588 * L - 0.296 * S - 15.8)
+
+    # Printing the result
+    if result < 1:
+        print("Before Grade 1")
+    elif result >= 16:
+        print("Grade 16+")
+    else:
+        print(f"Grade {result}")
+
+
+# A function for counting letters, words, and sentences
+def counter(text):
+    letters = 0
+    words = 1  # Because the last word did not end with a space
+    sentences = 0
+
+    # Iterating through each character of the string
+    for char in text:
+        if char.isalpha():
+            letters += 1
+        elif char == " ":
+            words += 1
+        elif char in {".", "!", "?"}:
+            sentences += 1
+
+    return letters, words, sentences  # It will return a tuple
+
+
+main()
+
